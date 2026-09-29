@@ -47,6 +47,7 @@ fun TipCalculatorScreen(){
     var totalAmountState = remember { TextFieldState("0.0") }
     val guestNumberState = remember { TextFieldState("0") }
     var checked by rememberSaveable { mutableStateOf(false) }
+    var result by rememberSaveable { mutableStateOf("") }
     val sliderState = rememberSliderState (
             steps = 3,
             valueRange = 0f..4f
@@ -85,7 +86,7 @@ fun TipCalculatorScreen(){
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text= stringResource(R.string.TipLabel)
+                    text= stringResource(R.string.tipLabel)
                 )
                 Switch(
                     checked = checked,
@@ -104,10 +105,19 @@ fun TipCalculatorScreen(){
             val isCalulateButtonEnabled = (guestNumber != null && totalAmount != null)
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {},
+                onClick = {
+                    val porcentaje = if (checked) (sliderState.value.toInt()+1) * 5 else 0
+                    val propina = totalAmount!! * porcentaje / 100
+                    val total = totalAmount + propina
+                    val porPersona = total / guestNumber!!
+                    result = "Propina: $porcentaje%\nCada persona paga: $porPersona"
+                },
                 enabled = isCalulateButtonEnabled
+
             ) {
-                Text(stringResource(R.string.CalculateLabel))
+                Text(
+                    text= stringResource(R.string.calculateLabel)
+                )
                 when (tipValue) {
                     1.0f ->{
 
@@ -115,7 +125,7 @@ fun TipCalculatorScreen(){
                 }
             }
 
-            Text("")
+            Text(text = result)
         }
     }
 }

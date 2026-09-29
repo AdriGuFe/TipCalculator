@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calculadora de propina</string>
-    <string name="CalculateLabel">Calcular</string>
-    <string name="TipLabel">Propina</string>
+    <string name="app_name">Tip Calculator</string>
+    <string name="calculateLabel">Calculate</string>
+    <string name="tipLabel">Tip</string>
 </resources>
